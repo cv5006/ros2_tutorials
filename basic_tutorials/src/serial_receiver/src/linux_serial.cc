@@ -47,5 +47,5 @@ void LinuxSerial::Close()
 void LinuxSerial::PrintError()
 {
     //RCLCPP_ERROR(this->get_logger(), "Error %i from tcgetattr: %s\n", errno, strerror(errno));
-    //std::cout << "Error " << errno << " from tcgetattr: " << strerror(errno) << std::endl;
+    std::cout << "Error " << errno << " from tcgetattr: " << strerror(errno) << std::endl;
 }

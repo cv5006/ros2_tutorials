@@ -9,6 +9,7 @@
 #define SERIAL_RECEIVER_LINUX_SERIAL_H_
 
 #include <string.h>
+#include <iostream>
 
 #include <fcntl.h> // Contains file controls like O_RDWR
 #include <errno.h> // Error integer and strerror() function

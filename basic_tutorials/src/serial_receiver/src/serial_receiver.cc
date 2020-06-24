@@ -8,7 +8,7 @@ using namespace chrono_literals;
 
 SerialReceiver::SerialReceiver() : Node("serial_receiver")
 {
-    serial_.Begin("/dev/ttyACM0", 115200);
+    serial_.Begin("/dev/ttyS3", 115200);
     /* std::bind ? */
     timer_ = this->create_wall_timer(1s, bind(&SerialReceiver::TimerCallback, this));
     
