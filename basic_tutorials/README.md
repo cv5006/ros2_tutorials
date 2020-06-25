@@ -1,4 +1,4 @@
-#Basic Tutorials
+# Basic Tutorials
 다음과 같은 ROS의 주요 기능을 구현해 본다.
  - Workspace 구성 및 Package 만들기
  - Node 만들기
@@ -9,7 +9,7 @@
 
 [ROS2 공식 튜토리얼](https://index.ros.org/doc/ros2/Tutorials/#tutorials) 참고
 
-##실습 환경
+## 실습 환경
 실습을 위해 다음과 같이 몹시 간단한 시스템을 구성한다.
 
 ![system_for_tutorial](/images/basic_tutorials_system.png)
