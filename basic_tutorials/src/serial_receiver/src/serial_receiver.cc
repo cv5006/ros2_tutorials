@@ -24,7 +24,8 @@ void SerialReceiver::TimerCallback()
     gets();
 }
 
-void SerialReceiver::gets(){
+void SerialReceiver::gets()
+{
     char rx;    
     serial_.Read(&rx);
     cout << signed(rx) << endl;    
