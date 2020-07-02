@@ -13,7 +13,7 @@ void loop() {
   }
 
   if(ms_timer > WRITE_PERIOD){
-    Serial.println(recieved_data);
+    Serial.write(recieved_data);
     ms_timer = 0;
   }
   

@@ -1,14 +1,14 @@
 /*
- * linux_serial.h
+ * simple_serial.h
  * 
  * references: 
  * Linux headers https://blog.mbedded.ninja/programming/operating-systems/linux/linux-serial-ports-using-c-cpp/
  * 
  */
-#ifndef SERIAL_RECEIVER_LINUX_SERIAL_H_
-#define SERIAL_RECEIVER_LINUX_SERIAL_H_
+#ifndef SERIAL_RECEIVER_SIMPLE_SERIAL_H_
+#define SERIAL_RECEIVER_SIMPLE_SERIAL_H_
 
-#include <string.h>
+#include <string>
 #include <iostream>
 
 #include <fcntl.h> // Contains file controls like O_RDWR
@@ -18,15 +18,17 @@
 
 
 
-class LinuxSerial
+class SimpleSerial
 {
 public:
-    LinuxSerial() {};
-    ~LinuxSerial() {};
+    SimpleSerial() {};
+    ~SimpleSerial() {};
 
-    void Begin(const char* _port, speed_t _baud_rate);
-    void Read(char* _rx_data);
+    void Begin(std::string _port, speed_t _baud_rate);
+    void Read(std::string& _rx);
+    void Write(const std::string& _tx_data);
     void Close();
+    void Flush();
 
 private:
     int serial_port_;

@@ -19,7 +19,7 @@ INCLUDE_DIRECTORIES (include)
 
 
 
-add_executable(serial_receiver src/serial_receiver.cc src/linux_serial.cc)
+add_executable(serial_receiver src/serial_receiver.cc src/simple_serial.cc)
 ament_target_dependencies(serial_receiver rclcpp std_msgs)
 
 install(TARGETS

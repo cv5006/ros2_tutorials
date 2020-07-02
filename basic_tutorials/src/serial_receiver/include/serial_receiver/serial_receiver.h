@@ -7,11 +7,12 @@
 
 #include <chrono>
 #include <functional>
+#include <sstream>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-#include "linux_serial.h"
+#include "simple_serial.h"
 
 class SerialReceiver : public rclcpp::Node
 {
@@ -22,9 +23,11 @@ public:
     void gets();
 
 private:
+    std::string port_name_;
+    char counter_ = 0;
     void TimerCallback();
 
-    LinuxSerial serial_;
+    SimpleSerial serial_;
     rclcpp::TimerBase::SharedPtr timer_;
     
 };
