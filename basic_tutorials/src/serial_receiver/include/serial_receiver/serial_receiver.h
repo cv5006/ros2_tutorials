@@ -11,6 +11,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "basic_tutorial_interfaces/srv/set_home.hpp"
 
 #include "simple_serial.h"
 
@@ -26,9 +27,11 @@ private:
     std::string port_name_;
     char counter_ = 0;
     void TimerCallback();
+    //void SetHome(const std::shared_ptr<basic_tutorial_interfaces::srv::SetHome::Request>  req){};
 
     SimpleSerial serial_;
     rclcpp::TimerBase::SharedPtr timer_;
+    //rclcpp::Service<basic_tutorial_interfaces::srv::SetHome>::SharedPtr srv_;
     
 };
 

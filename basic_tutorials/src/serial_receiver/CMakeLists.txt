@@ -14,13 +14,19 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(basic_tutorial_interfaces REQUIRED)
+
 
 INCLUDE_DIRECTORIES (include)
 
-
-
-add_executable(serial_receiver src/serial_receiver.cc src/simple_serial.cc)
-ament_target_dependencies(serial_receiver rclcpp std_msgs)
+add_executable(serial_receiver 
+  src/serial_receiver.cc
+  src/simple_serial.cc)
+  
+ament_target_dependencies(serial_receiver
+  rclcpp
+  std_msgs
+  basic_tutorial_interfaces)
 
 install(TARGETS
   serial_receiver

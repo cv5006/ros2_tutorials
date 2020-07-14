@@ -38,7 +38,7 @@ void SimpleSerial::Begin(std::string _port, speed_t _baud_rate)
 
     if (tcsetattr(serial_port_, TCSANOW, &tty) != 0) { PrintError(); }
 }
-
+// TODO:Buffer
 void SimpleSerial::Read(std::string& _rx)
 {
     char buff[1] = {};
