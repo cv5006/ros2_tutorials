@@ -5,14 +5,17 @@
 using namespace std;
 using namespace rclcpp;
 using namespace chrono_literals;
+using namespace basic_tutorial_interfaces;
 
 SerialReceiver::SerialReceiver() : Node("serial_receiver")
 {    
     /* std::bind ? */
     timer_ = this->create_wall_timer(500ms, bind(&SerialReceiver::TimerCallback, this));
-    //srv_ = this->create_service<basic_tutorial_interfaces::srv::SetHome>("set_home", &SerialReceiver::SetHome);
-    this->declare_parameter<string>("serial_port", "/dev/ttyS3");
+    srv_ = this->create_service<srv::SetHome>("set_home", &SerialReceiver::SetHome);
+
+    this->declare_parameter<string>("serial_port", "/dev/ttyS3");    
     this->get_parameter("serial_port", port_name_);
+
     serial_.Begin(port_name_, 115200);
     serial_.Flush();
 }
@@ -36,8 +39,14 @@ void SerialReceiver::gets()
 
 int main(int argc, char* argv[])
 {    
+    
+    
     init(argc, argv);
-    spin(make_shared<SerialReceiver>());
+
+    auto node = make_shared<SerialReceiver>();
+    //auto srv = node->create_service<srv::SetHome>("set_home", &SetHome);
+
+    spin(node);
     shutdown();
     
     return 0;
