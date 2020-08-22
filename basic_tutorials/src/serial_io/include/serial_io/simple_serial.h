@@ -11,6 +11,7 @@
 #include <string>
 #include <iostream>
 
+#include <string.h>
 #include <fcntl.h> // Contains file controls like O_RDWR
 #include <errno.h> // Error integer and strerror() function
 #include <termios.h> // Contains POSIX terminal control definitions
@@ -22,16 +23,17 @@ class SimpleSerial
 {
 public:
     SimpleSerial() {};
-    ~SimpleSerial() {};
+    ~SimpleSerial() { End(); };
 
     void Begin(std::string _port, speed_t _baud_rate);
-    void Read(std::string& _rx);
-    void Write(const std::string& _tx_data);
-    void Close();
-    void Flush();
+    void ReadByte(char* rx);
+    void WriteByte(const char tx);
+    void Write(const std::string& tx);
+    void End();
 
 private:
     int serial_port_;
+    const size_t buffer_size_ = 1024;
 
     void PrintError();
 };

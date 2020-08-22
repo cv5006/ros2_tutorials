@@ -18,13 +18,13 @@
    - Ubuntu 18.04
    - ROS2 Eloquent
    - VS Code + ROS extension (C/C++ 당연히!)
- - Arduino
+ - Arduino (Uno)
    - src/arduino_test_code 사용
    - 시리얼 통신으로 센서 값을 송신, 모터 출력 값을 수신한다.
  - Sensor
    - 적당한 아날로그 센서
  - Motor
-   - PWM으로 움직일만한 적당한 모터. 없으면 LED로 대체
+   - 파랗고 조그만 그 서보모터
 
 
-
+##

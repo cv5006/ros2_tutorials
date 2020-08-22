@@ -1,7 +1,5 @@
-#include "simple_serial.h"
+#include "serial_io/simple_serial.h"
 
-
-/* TODO: Convert to C++ style if possible! */
 
 void SimpleSerial::Begin(std::string _port, speed_t _baud_rate)
 {
@@ -18,7 +16,7 @@ void SimpleSerial::Begin(std::string _port, speed_t _baud_rate)
     if(tcgetattr(serial_port_, &tty) != 0) { PrintError(); }
 
     tty.c_cflag &= ~PARENB;          // NO parity bit
-    tty.c_cflag &= ~CSTOPB;          // No stop bit
+    tty.c_cflag |= CSTOPB;           // One stop bit
     tty.c_cflag |= CS8;              // 8 bits per byte
     tty.c_cflag &= ~CRTSCTS;         // Disable RTS/CTS hardware flow control 
     tty.c_cflag |= CREAD | CLOCAL;   // Turn on READ & ignore ctrl lines (CLOCAL = 1)
@@ -38,30 +36,31 @@ void SimpleSerial::Begin(std::string _port, speed_t _baud_rate)
 
     if (tcsetattr(serial_port_, TCSANOW, &tty) != 0) { PrintError(); }
 }
-// TODO:Buffer
-void SimpleSerial::Read(std::string& _rx)
+
+
+void SimpleSerial::ReadByte(char* rx)
+{    
+    read(serial_port_, rx, sizeof(rx));    
+    tcflush(serial_port_,TCIOFLUSH);
+}
+
+void SimpleSerial::WriteByte(const char tx){    
+    write(serial_port_, &tx, 1);
+}
+
+void SimpleSerial::Write(const std::string& tx)
 {
-    char buff[1] = {};
-    read(serial_port_, buff, sizeof(buff));
-    _rx = buff;    
+    write(serial_port_, tx.c_str() , strlen(tx.c_str()));
 }
 
-void SimpleSerial::Write(const std::string& _tx){    
-    write(serial_port_, _tx.c_str(), _tx.size());
-}
-
-void SimpleSerial::Close()
-{
-    close(serial_port_);
-}
-
-void SimpleSerial::Flush()
+void SimpleSerial::End()
 {
     tcflush(serial_port_,TCIOFLUSH);
+    close(serial_port_);
 }
 
 void SimpleSerial::PrintError()
 {
     //RCLCPP_ERROR(this->get_logger(), "Error %i from tcgetattr: %s\n", errno, strerror(errno));
-    std::cout << "Error " << errno << " from tcgetattr: " << std::endl;
+    std::cout << "Error " << errno << " from tcgetattr: " << strerror(errno) << std::endl;
 }
