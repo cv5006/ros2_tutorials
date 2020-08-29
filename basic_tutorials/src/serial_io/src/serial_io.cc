@@ -11,10 +11,10 @@ using std::placeholders::_1;
 
 SerialIO::SerialIO() : Node("serial_io")
 {    
-    timer_ = this->create_wall_timer(500ms, bind(&SerialIO::TimerCallback, this));
+    timer_ = this->create_wall_timer(100ms, bind(&SerialIO::TimerCallback, this));
     pub_ = this->create_publisher<msg_t>("sensor", 10);
     sub_ = this->create_subscription<msg_t>("motor", 10, bind(&SerialIO::UpdateMotorAngle, this, _1));
-
+    
     this->declare_parameter<string>("serial_port", "/dev/ttyS3");    
     this->get_parameter("serial_port", port_name_);
 
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
     init(argc, argv);
 
     auto node = make_shared<SerialIO>();
-
+    
     spin(node);
     
     shutdown();
