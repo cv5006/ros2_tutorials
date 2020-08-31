@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'follower = control_nodes.follower:main',
+            'follower  = control_nodes.follower:main',
+            'sine_wave = control_nodes.sine_wave:main',
         ],
     },
 )
