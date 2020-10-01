@@ -22,7 +22,7 @@ setup(
         'console_scripts': [
             'follower  = control_nodes.follower:main',
             'sine_wave = control_nodes.sine_wave:main',
-            'come_here = control_nodes.come_here:main'
+            'mover = control_nodes.mover:main'
         ],
     },
 )

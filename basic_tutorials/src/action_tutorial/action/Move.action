@@ -1,0 +1,8 @@
+# Request
+int16 destination
+---
+# Result
+int16 position
+---
+# Feedback
+int16 footprint
