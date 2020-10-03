@@ -1,6 +1,5 @@
 #include "serial_io/serial_io.h"
 
-
 using namespace std;
 using namespace rclcpp;
 using namespace chrono_literals;
@@ -18,8 +17,7 @@ SerialIO::SerialIO() : Node("serial_io")
     this->declare_parameter<string>("serial_port", "/dev/ttyS3");    
     this->get_parameter("serial_port", port_name_);
 
-    serial_.Begin(port_name_, 115200);
-    serial_.Write("0\n");
+    serial_.Begin(port_name_, 115200);    
 }
 
 SerialIO::~SerialIO()
@@ -29,24 +27,14 @@ SerialIO::~SerialIO()
 
 void SerialIO::TimerCallback()
 {
+    int rx_data;
+
+    serial_.WriteInt(motor_angle_);    
+    serial_.ReadInt(rx_data);
+
+    RCLCPP_INFO(this->get_logger(), "%d : %d", motor_angle_, rx_data);
+
     counter_++;
-
-    stringstream wdat;    
-    wdat << motor_angle_;
-    
-    
-    serial_.Write(wdat.str()+"\n");
-    char rx[32] = {0};
-    serial_.ReadByte(rx);
-
-    stringstream rdat(rx);
-    int asd;
-    rdat >> asd;
-    auto sensor_msgs = std_msgs::msg::Int16();
-    sensor_msgs.data = static_cast<int16_t>(asd);
-    pub_->publish(sensor_msgs);
-
-    RCLCPP_INFO(this->get_logger(), "%d : %d", motor_angle_, asd);
 }
 
 void SerialIO::UpdateMotorAngle(const msg_t::SharedPtr msg)
@@ -58,12 +46,8 @@ void SerialIO::UpdateMotorAngle(const msg_t::SharedPtr msg)
 int main(int argc, char* argv[])
 {
     init(argc, argv);
-
-    auto node = make_shared<SerialIO>();
-    
-    spin(node);
-    
-    shutdown();
-    
+    auto node = make_shared<SerialIO>();    
+    spin(node);    
+    shutdown();    
     return 0;
 }

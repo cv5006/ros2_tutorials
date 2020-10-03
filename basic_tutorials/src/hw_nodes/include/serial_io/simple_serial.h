@@ -9,6 +9,7 @@
 #define SERIAL_RECEIVER_SIMPLE_SERIAL_H_
 
 #include <string>
+#include <sstream>
 #include <iostream>
 
 #include <string.h>
@@ -17,7 +18,7 @@
 #include <termios.h> // Contains POSIX terminal control definitions
 #include <unistd.h> // write(), read(), close()
 
-
+typedef int errno_t;
 
 class SimpleSerial
 {
@@ -25,15 +26,16 @@ public:
     SimpleSerial() {};
     ~SimpleSerial() { End(); };
 
-    void Begin(std::string _port, speed_t _baud_rate);
-    void ReadByte(char* rx);
+    void Begin(const std::string& _port, const speed_t& _baud_rate);    
+    errno_t ReadInt(int& data);
     void WriteByte(const char tx);
     void Write(const std::string& tx);
+    errno_t WriteInt(const int& data);
     void End();
 
 private:
     int serial_port_;
-    const size_t buffer_size_ = 1024;
+    static const size_t buffer_size_ = 32;
 
     void PrintError();
 };

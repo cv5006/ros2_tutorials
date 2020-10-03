@@ -1,7 +1,7 @@
 #include "serial_io/simple_serial.h"
 
 
-void SimpleSerial::Begin(std::string _port, speed_t _baud_rate)
+void SimpleSerial::Begin(const std::string& _port, const speed_t& _baud_rate)
 {
     serial_port_ = open(_port.c_str(), O_RDWR);
 
@@ -37,15 +37,24 @@ void SimpleSerial::Begin(std::string _port, speed_t _baud_rate)
     if (tcsetattr(serial_port_, TCSANOW, &tty) != 0) { PrintError(); }
 }
 
-
-void SimpleSerial::ReadByte(char* rx)
-{    
-    read(serial_port_, rx, sizeof(rx));    
-    tcflush(serial_port_,TCIOFLUSH);
-}
-
 void SimpleSerial::WriteByte(const char tx){    
     write(serial_port_, &tx, 1);
+}
+
+errno_t SimpleSerial::ReadInt(int& data){
+    char buff[buffer_size_] = {0};
+    read(serial_port_, buff, buffer_size_);
+    std::stringstream rx_str(buff);
+    rx_str >> data;
+    return errno;
+}
+
+errno_t SimpleSerial::WriteInt(const int& data){    
+    std::stringstream tx_str;
+    tx_str << data;
+    std::string tmp = tx_str.str() + "\n";
+    write(serial_port_, tmp.c_str(), tmp.size());    
+    return errno;
 }
 
 void SimpleSerial::Write(const std::string& tx)
