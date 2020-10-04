@@ -26,18 +26,15 @@ public:
     SimpleSerial() {};
     ~SimpleSerial() { End(); };
 
-    void Begin(const std::string& _port, const speed_t& _baud_rate);    
+    errno_t Begin(const char* _port, const speed_t& _baud_rate);    
     errno_t ReadInt(int& data);
-    void WriteByte(const char tx);
-    void Write(const std::string& tx);
     errno_t WriteInt(const int& data);
-    void End();
+    errno_t End();
 
 private:
     int serial_port_;
-    static const size_t buffer_size_ = 32;
-
-    void PrintError();
+    struct termios tty_ = {}; // termios structure
+    static const size_t buffer_size_ = 32; // buffer for reading
 };
 
 #endif
