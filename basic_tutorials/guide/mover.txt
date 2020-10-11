@@ -1,0 +1,13 @@
+# 0. Import Modules and Declare Constants
+
+# 1. Define Node
+    # 1.1. Define Constructor
+
+    # 1.2. Define Execution Callback
+        # 1.2.1. Call service to stop sine wave
+        # 1.2.2. Declare interface instances
+        # 1.2.3. Execute action!
+
+# 2. Define Main Function
+
+# 3. Run Main function

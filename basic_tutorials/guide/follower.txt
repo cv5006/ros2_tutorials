@@ -1,0 +1,20 @@
+# 0. Import Modules and Declare Constants
+
+# 1. Define Node  
+    # 1.1. Define Constructor
+	# 1.1.1. Initialize Node
+        # 1.1.2. Create publisher/subscriber instance
+        
+    # 1.2. Define Subscriber Callback Method
+        # 1.2.1. Create message instance to publish
+        # 1.2.2. Assing data to message
+        # 1.2.3. Publish message
+        # 1.2.4. Print result
+
+# 2. Define Main Function
+    # 2.1. Initialize RCLPY
+    # 2.2. Create and node instance
+    # 2.3. Spin the node!
+    # 2.4. Destory node and shutdown RCLPY   
+
+# 3. Run Main function

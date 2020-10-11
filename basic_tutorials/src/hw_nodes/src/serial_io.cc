@@ -42,7 +42,7 @@ void SerialIO::TimerCallback()
     sensor_data.data = rx_data;
     pub_->publish(sensor_data);
 
-    RCLCPP_INFO(this->get_logger(), "%d : %d", motor_angle_, rx_data);    
+    RCLCPP_INFO(this->get_logger(), "Motor: %d, Sensor: %d", motor_angle_, rx_data);    
 }
 
 void SerialIO::UpdateMotorAngle(const msg_t::SharedPtr msg)
