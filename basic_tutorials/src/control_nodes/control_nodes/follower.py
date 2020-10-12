@@ -14,7 +14,7 @@ class Follower(Node):
         
         # 1.1.1. Initialize Node
         super().__init__(NODE_NAME)
-
+        
         # 1.1.2. Create publisher/subscriber instance
         self.pub = self.create_publisher(Int16, MOTOR_TOPIC_NAME, 10)
         self.sub = self.create_subscription(Int16, SENSOR_TOPIC_NAME, self.sensor_callback, 10)        
@@ -43,9 +43,13 @@ def main(args = None):
 
     # 2.2. Create and node instance
     node = Follower()
+    node.get_logger().info("Node is ready!")
 
-    # 2.3. Spin the node!
-    rclpy.spin(node)
+    # 2.3. Spin the node and handle exception
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().info("WTF")
 
     # 2.4. Destory node and shutdown RCLPY
     node.destroy_node() # Note this is optional
