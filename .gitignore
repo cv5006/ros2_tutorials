@@ -5,3 +5,7 @@ log/
 
 # VS Code files
 .vscode/
+
+# Python friends
+*.pyc
+*.pyo

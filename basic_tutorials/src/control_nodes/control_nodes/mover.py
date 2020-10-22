@@ -12,6 +12,7 @@ NODE_NAME = 'mover'
 MOTOR_TOPIC_NAME = 'motor'
 SERVICE_NAME = 'run'
 ACTION_NAME = 'move'
+PARAMETER_NAME = 'step'
 
 # 1. Define Node  
 class MoveServer(Node):
@@ -19,11 +20,14 @@ class MoveServer(Node):
     # 1.1. Define Constructor
     def __init__(self):
         super().__init__(NODE_NAME)
+
+        self.step = 0
         
-        # 1.1.1. Create Pub/Sub and Action Server
+        # 1.1.1. Create Pub/Sub, Service Client, Action Server and Parameter
         self.pub = self.create_publisher(Int16, MOTOR_TOPIC_NAME, 10)
         self.cli = self.create_client(SetBool, SERVICE_NAME)
         self.act_srv = ActionServer(self, Move, ACTION_NAME, self.exe_callback)
+        self.declare_parameter(PARAMETER_NAME)
 
     # 1.2. Define Execution Callback
     def exe_callback(self, hgoal):
@@ -40,14 +44,14 @@ class MoveServer(Node):
         goal = hgoal.request.destination
 
         # 1.2.3. Execute action!
-        step_limit = 10
+        step_size = self.get_parameter(PARAMETER_NAME).get_parameter_value().integer_value + 1 
         if 0 <= goal <= 180:
             self.get_logger().info('Move from: %d → to: %d' % (msg.data, goal))        
             
             i = 0
             while True:
                 err = (msg.data - goal)                
-                msg.data = msg.data - (err if abs(err) < step_limit else int(copysign(1, err)) * step_limit)
+                msg.data = msg.data - (err if abs(err) < step_size else int(copysign(1, err)) * step_size)
                 
                 self.pub.publish(msg)
                 feedback_msg.footprint = msg.data
@@ -78,8 +82,10 @@ def main(args = None):
     rclpy.init(args = args)
 
     node = MoveServer()
-    rclpy.spin(node)
+    node.get_logger().info('Mover is running!')
 
+    rclpy.spin(node)
+    
     node.destroy_node()
     rclpy.shutdown
 

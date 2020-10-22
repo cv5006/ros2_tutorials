@@ -27,9 +27,16 @@ ROS2의 기본적인 기능들을 실습한다.
   - Motor
     - 파랗고 조그만 그 서보모터
     - D9핀 사용
-
+  
+  
 ## 2. 실습 내용
+- ROS2를 이용해
+  - 센서로 모터를 조작 해본다
+  - 지정한 프로파일대로 모터를 움직여본다 (생략)
+  - 지정한 위치로 모터를 이동시켜본다
+
 ### 2.1. Workspace 구성 및 Package 만들기
+
 ### 2.2. Topic, Service, Action 사용하기
 #### 2.2.1. Topic publisher/subscribeer
 #### 2.2.2. Serivce server/client
@@ -37,7 +44,9 @@ ROS2의 기본적인 기능들을 실습한다.
 ### 2.3. Parameter 사용하기
 ### 2.4. Launch file 만들기
 ### 2.5. RQT 사용하기
-
+ 
+  
 ## 3. What's More!
-### 3.1 아오
+### 3.1. ROS with Docker
+### 3.1. MicroROS
 
