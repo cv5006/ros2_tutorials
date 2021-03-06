@@ -10,3 +10,4 @@ bag/
 # Python friends
 *.pyc
 *.pyo
+__pycache__
