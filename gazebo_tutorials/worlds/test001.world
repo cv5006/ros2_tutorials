@@ -1,0 +1,28 @@
+<sdf version='1.7'>
+  <world name='default'>
+    
+    <include>
+      <uri>model://sun</uri>      
+    </include>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+ 
+
+  <model name="robot01">
+    <include>
+      <uri>model://rrrbot</uri>
+      <pose>0.0 0.0 1.0 0.0 0.0 0.0</pose>
+    </include>
+
+    <joint name="pin" type="fixed">
+      <parent>world</parent>
+      <child>rrrbot::link_0</child>
+    </joint>
+  </model>
+
+   <plugin name="hello_world" filename="libhello_world.so"/>
+
+  </world>
+</sdf>
