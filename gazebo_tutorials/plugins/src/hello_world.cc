@@ -1,5 +1,6 @@
 #include <gazebo/gazebo.hh>
 #include <iostream>
+#include "rclcpp/rclcpp.hpp"
 
 namespace gazebo
 {
@@ -13,6 +14,7 @@ namespace gazebo
 
             void Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
             {
+                
             }
     };
 

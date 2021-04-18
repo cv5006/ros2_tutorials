@@ -1,4 +1,4 @@
-repo_path="$(dirname ${BASH_SOURCE[0]}})/.."
+repo_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/.."
 
 model_path=gazebo_tutorials/models
 plugin_path=gazebo_tutorials/plugins/build

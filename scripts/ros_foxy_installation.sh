@@ -16,9 +16,18 @@ sudo sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.or
 
 sudo apt update
 
+# ROS2 desktop
 sudo apt install ros-foxy-desktop -y
 
+# argcomplete
 sudo apt install -y python3-pip -y
 pip3 install -U argcomplete -y
 
+# Build tool
 sudo apt install python3-colcon-common-extensions -y
+
+# ROS2 Control
+sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers -y
+
+# Some dependencies
+sudo apt install ros-foxy-realtime-tools ros-foxy-xacro ros-foxy-angles -y
