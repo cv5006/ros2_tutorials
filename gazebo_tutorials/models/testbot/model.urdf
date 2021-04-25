@@ -1,0 +1,66 @@
+<?xml version='1.0'?>
+<robot name='testbot'>
+    <link name='link_1'>
+        <inertial>
+            <mass value="1" />            
+            <inertia ixx="0.145833" ixy="0" ixz="0"
+                     iyy="0.145833" iyz="0"
+                     izz="125"/>
+            <origin xyz="0 0 0.5" rpy="0 0 0"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius='0.5' length='1.0'/>
+            </geometry>
+            <origin xyz="0 0 0.5" rpy="0 0 0"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius='0.5' length='1.0'/>
+            </geometry>
+            <origin xyz="0 0 0.5" rpy="0 0 0"/>
+        </collision>
+    </link>
+    <link name='link_2'>
+        <inertial>
+            <mass value="1" />            
+            <inertia ixx="0.145833" ixy="0" ixz="0"
+                     iyy="0.145833" iyz="0"
+                     izz="125"/>
+            <origin xyz="0 0 1.5" rpy="0 0 0"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="1 1 1"/>
+            </geometry>
+            <origin xyz="0 0 1.5" rpy="0 0 0"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="1 1 1"/>
+            </geometry>
+            <origin xyz="0 0 1.5" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <joint name='link_1_JOINT_0' type='revolute'>
+        <parent link="link_1"/>
+        <child link="link_2"/>
+        <origin xyz="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <dynamics damping="0.2" friction="0.1"/>
+    </joint>
+
+    <ros2_control name="rotate_box_bot" type="system">
+        <hardware>
+          <plugin>my_rotate_bot_plugin/MyRotateBotHardware</plugin>
+          <param name="example_param_hw_start_duration_sec">2.0</param>
+          <param name="example_param_hw_stop_duration_sec">3.0</param>
+          <param name="example_param_hw_slowdown">2.0</param>
+        </hardware>
+        <joint name="link_1_JOINT_0">
+          <command_interface name="position"/>
+          <state_interface name="position"/>
+        </joint>
+      </ros2_control>
+</robot>
