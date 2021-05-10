@@ -5,6 +5,9 @@ import curses
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Vector3
 
+# Run with:
+# gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive_demo.world
+
 class Keyops(Node):
     def __init__(self):
         super().__init__('keyops')
