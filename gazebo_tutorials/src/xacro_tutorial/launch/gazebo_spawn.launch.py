@@ -20,13 +20,17 @@ def generate_launch_description():
              )
 
     # spawn robot
+    robot_name = 'unibot'
     spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
                         arguments=['-topic', 'robot_description',
-                                   '-entity', 'rotate_box_bot'],
+                                   '-entity', robot_name],
                         output='screen')
 
-    urdf_file = os.path.normpath('/home/seo/dev/ros2_tutorials/gazebo_tutorials/models/testbot/model.urdf')
-
+    urdf_file = os.path.join(
+        get_package_share_directory('xacro_tutorial'),
+        'model',
+        robot_name + '.xacro'
+    )
 
     doc = xacro.parse(open(urdf_file))
     xacro.process_doc(doc)
