@@ -60,7 +60,7 @@
   </gazebo>
   <!-- Joint -->
   <joint name="a1_joint" type="revolute">
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.35"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
     <parent link="a1_tail"/>
     <child link="a1_head"/>
     <axis xyz="0.0 0.0 1.0"/>
@@ -122,7 +122,7 @@
   </gazebo>
   <!-- Joint -->
   <joint name="a2_joint" type="revolute">
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.35"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
     <parent link="a2_tail"/>
     <child link="a2_head"/>
     <axis xyz="0.0 0.0 1.0"/>
@@ -184,7 +184,7 @@
   </gazebo>
   <!-- Joint -->
   <joint name="a3_joint" type="revolute">
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.35"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
     <parent link="a3_tail"/>
     <child link="a3_head"/>
     <axis xyz="0.0 0.0 1.0"/>
@@ -246,7 +246,7 @@
   </gazebo>
   <!-- Joint -->
   <joint name="a4_joint" type="revolute">
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.35"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
     <parent link="a4_tail"/>
     <child link="a4_head"/>
     <axis xyz="0.0 0.0 1.0"/>
@@ -308,7 +308,7 @@
   </gazebo>
   <!-- Joint -->
   <joint name="a5_joint" type="revolute">
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.35"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
     <parent link="a5_tail"/>
     <child link="a5_head"/>
     <axis xyz="0.0 0.0 1.0"/>
@@ -370,7 +370,7 @@
   </gazebo>
   <!-- Joint -->
   <joint name="a6_joint" type="revolute">
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.35"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
     <parent link="a6_tail"/>
     <child link="a6_head"/>
     <axis xyz="0.0 0.0 1.0"/>
@@ -432,7 +432,7 @@
   </gazebo>
   <!-- Joint -->
   <joint name="a7_joint" type="revolute">
-    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.35"/>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
     <parent link="a7_tail"/>
     <child link="a7_head"/>
     <axis xyz="0.0 0.0 1.0"/>
