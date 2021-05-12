@@ -12,6 +12,24 @@ from launch_ros.actions import Node
 import xacro
 
 def generate_launch_description():
+    pkg_name = 'xacro_tutorial'
+    robot_name = 'unibot'
+
+    urdf_file = os.path.join(
+        get_package_share_directory(pkg_name),
+        'model',
+        robot_name + '.xacro'
+        )
+
+    controller_config_file = os.path.join(
+        get_package_share_directory(pkg_name),
+        'config',
+        'controllers.yaml'        
+        )
+
+    doc = xacro.parse(open(urdf_file))
+    xacro.process_doc(doc)
+    robot_description = {'robot_description': doc.toxml()}
 
     # gazebo
     gazebo = IncludeLaunchDescription(
@@ -20,48 +38,37 @@ def generate_launch_description():
              )
 
     # spawn robot
-    robot_name = 'unibot'
     spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
                         arguments=['-topic', 'robot_description',
                                    '-entity', robot_name],
                         output='screen')
 
-    urdf_file = os.path.join(
-        get_package_share_directory('xacro_tutorial'),
-        'model',
-        robot_name + '.xacro'
-    )
-
-    doc = xacro.parse(open(urdf_file))
-    xacro.process_doc(doc)
-    robot_description = {'robot_description': doc.toxml()}
 
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
-        executable='robot_state_publisher',
-        output='screen',
-        parameters=[robot_description]
+        executable='robot_state_publisher',        
+        parameters=[
+            robot_description
+        ],
+        output='screen'
     )
 
-    # ros_control
-    controllers_file = os.path.join(
-        '/home/seo/dev/ros2_tutorials/gazebo_tutorials/models/testbot',        
-        'ros2_control_controllers.yaml'
-        )
 
+    # ros_control
     controller_manager = Node(
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[
             robot_description,
-            controllers_file
+            controller_config_file
         ],
         output='screen'
     )
 
     return LaunchDescription([
+        controller_manager,
         gazebo,
         node_robot_state_publisher,
         spawn_entity,
-        # controller_manager
+        
     ])
