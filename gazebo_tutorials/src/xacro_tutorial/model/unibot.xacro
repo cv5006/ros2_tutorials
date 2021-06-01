@@ -2,76 +2,56 @@
 <robot name="unibot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Includes -->
-  <xacro:include filename="$(find xacro_tutorial)/model/links.xacro"/>
-  <xacro:include filename="$(find xacro_tutorial)/model/union.xacro"/>
+  <xacro:include filename="$(find xacro_tutorial)/model/xacro/links.xacro"/>
+  <xacro:include filename="$(find xacro_tutorial)/model/xacro/union.xacro"/>
 
   
   <!-- Links -->
   <xacro:unit link="a1"/>
   <xacro:unit link="a2"/>
-  <xacro:unit link="a3"/>
+  <!-- <xacro:unit link="a3"/>
   <xacro:unit link="a4"/>
   <xacro:unit link="a5"/>
   <xacro:unit link="a6"/>
-  <xacro:unit link="a7"/>
+  <xacro:unit link="a7"/> -->
   <xacro:pin root_link="a1"/>
 
   <!-- Joints -->
   <xacro:union parent="a1" child="a2" y=" 1"/>
-  <xacro:union parent="a2" child="a3" x="-1"/>
+  <!-- <xacro:union parent="a2" child="a3" x="-1"/>
   <xacro:union parent="a3" child="a4" y="-1"/>
   <xacro:union parent="a4" child="a5" x="-1"/>
   <xacro:union parent="a5" child="a6" y="-1"/>
-  <xacro:union parent="a6" child="a7" x=" 1"/>
+  <xacro:union parent="a6" child="a7" x=" 1"/> -->
 
+  <ros2_control name="test" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="a1_joint">
+      <command_interface name="effort">
+        <param name="min">-100000</param>
+        <param name="max">100000</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
 
-  <gazebo>
-  <!-- <transmission name="tran1">
-      <type>transmission_interface/SimpleTransmission</type>
-      <joint name="a1_joint">
-        <hardwareInterface>EffortJointInterface</hardwareInterface>
-      </joint>
-      <actuator name="motor1">
-        <hardwareInterface>EffortJointInterface</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-    </transmission> -->
+  <gazebo>    
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so"></plugin>
+    <robot_sim_type>gazebo_ros2_control/GazeboSystem</robot_sim_type>
+  </gazebo>
 
-    <!-- <transmission name="tran1">
-      <type>transmission_interface/SimpleTransmission</type>
-      <joint name="a1_joint">
-        <hardwareInterface>EffortJointInterface</hardwareInterface>
-      </joint>
-      <actuator name="motor1">
-        <hardwareInterface>EffortJointInterface</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-    </transmission> -->
-    
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">          
-        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-    </plugin>
-    
+  <!-- <gazebo>
     <plugin name=   "gazebo_ros_joint_state_publisher"
         filename="libgazebo_ros_joint_state_publisher.so">
       <update_rate>100</update_rate>
       <joint_name>a1_joint</joint_name>
       <joint_name>a2_joint</joint_name>
     </plugin>
-  </gazebo>
+  </gazebo> -->
 
-  <ros2_control name="test" type="actuator">
-    <hardware>
-
-    </hardware>
-    <joint name="a1_joint">
-      <command_interface name="position">
-        <param name="min">0</param>
-        <param name="max">50</param>
-      </command_interface>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-  </ros2_control>
 
 </robot>
