@@ -24,7 +24,7 @@
   <xacro:union parent="a5" child="a6" y="-1"/>
   <xacro:union parent="a6" child="a7" x=" 1"/> -->
 
-  <ros2_control name="test" type="system">
+  <ros2_control name="GazeboSystem" type="system">
     <hardware>
       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
     </hardware>
@@ -39,9 +39,10 @@
     </joint>
   </ros2_control>
 
-  <gazebo>    
-    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so"></plugin>
-    <robot_sim_type>gazebo_ros2_control/GazeboSystem</robot_sim_type>
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find xacro_tutorial)/config/controllers.yaml</parameters>
+    </plugin>
   </gazebo>
 
   <!-- <gazebo>
