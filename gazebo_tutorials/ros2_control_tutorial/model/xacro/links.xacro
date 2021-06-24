@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find xacro_tutorial)/model/xacro/properties.xacro"/>
+
+    <xacro:macro name="unit" params="link">
+        
+        <!-- Geometry Macros-->
+        <xacro:macro name="tail_geom">
+            <origin xyz="0.0 0.0 ${heigth/2}" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${width/2}" length="${heigth}"/>
+            </geometry>
+        </xacro:macro>
+
+        <xacro:macro name="head_geom">
+            <origin xyz="0.0 0.0 ${width/2}" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="${width} ${width} ${width}"/>
+            </geometry>
+        </xacro:macro>    
+
+        <!-- Tail Link -->
+        <link name="${link}_tail">
+            <inertial>
+                <origin xyz="0.0 0.0 ${heigth/2}" rpy="0.0 0.0 0.0"/>
+                <mass value="1.0"/>
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                        iyy="1.0" iyz="0.0"
+                        izz="1.0"/>
+            </inertial>
+            <visual>
+                <xacro:tail_geom/>
+                <material name="White">
+                    <color rgba="1.0 1.0 1.0 1.0"/>                
+                </material>
+            </visual>
+            <collision>
+                <xacro:tail_geom/>
+            </collision>
+        </link>
+        <gazebo reference="${link}_tail">
+            <selfCollide>true</selfCollide>
+            <material>Gazebo/White</material>
+        </gazebo>
+
+        <!-- Head Link -->
+        <link name="${link}_head">
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="1.0"/>
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                        iyy="1.0" iyz="0.0"
+                        izz="1.0"/>
+            </inertial>
+            <visual>
+                <xacro:head_geom/>
+                <material name="Blue">
+                    <color rgba="0.0 0.0 1.0 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <xacro:head_geom/>
+            </collision>
+        </link>
+        <gazebo reference="${link}_head">
+            <selfCollide>true</selfCollide>
+            <material>Gazebo/Blue</material>
+        </gazebo>
+        
+
+        <!-- Joint -->
+        <joint name="${link}_joint" type="revolute">
+            <origin xyz="0.0 0.0 ${heigth}" rpy="0.0 0.0 0.0"/>
+            <parent link="${link}_tail"/>
+            <child link="${link}_head"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit lower="${-2*pi}" upper="${2*pi}" effort="1000000" velocity="1000000"/>
+        </joint>
+    </xacro:macro>
+
+    <!-- Base Link Macro -->
+    <xacro:macro name="pin" params="root_link">
+        <link name="world"/>
+        <gazebo reference="world">
+            <static>true</static>
+        </gazebo>
+        
+        <joint name="pin" type="fixed">            
+            <parent link="world"/>
+            <child link="${root_link}_tail"/>
+        </joint>
+    </xacro:macro>
+</robot>

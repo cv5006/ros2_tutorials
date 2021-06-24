@@ -1,0 +1,13 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="union" params="parent child x=0 y=0 z=0">
+
+        <xacro:include filename="$(find xacro_tutorial)/model/xacro/properties.xacro"/>
+
+        <joint name="${parent}_${child}_joint" type="fixed">
+            <origin xyz="${x*width/2} ${y*width/2} ${z*width/2+width/2}"
+                    rpy="${-y*pi/2} ${x*pi/2} 0"/>
+            <parent link="${parent}_head"/>
+            <child link="${child}_tail"/>            
+        </joint>
+    </xacro:macro>
+</robot>

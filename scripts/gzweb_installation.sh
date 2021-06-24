@@ -21,3 +21,4 @@ sudo apt install libjansson-dev libboost-dev imagemagick libtinyxml-dev mercuria
 # gzweb color issue
 # https://support.yonohub.com/t/gzweb-media-directory-is-missing/144
 # copy /usr/share/gazebo-9/media to ~/gzweb/http/client/assets
+# cp -r /usr/share/gazebo-9/media/* {your gzweb src path}/gzweb/http/client/assets
