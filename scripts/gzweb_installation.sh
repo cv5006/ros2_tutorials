@@ -9,13 +9,14 @@ sudo apt install libjansson-dev libboost-dev imagemagick libtinyxml-dev mercuria
  source ~/.bashrc
 
  # install node. Supported versions are 8 to 11. 
- nvm install 8
+ nvm install 11
 
 
-#  git clone https://github.com/osrf/gzweb
-#  git checkout gzweb_1.4.1
-#  source /usr/share/gazebo/setup.sh
-#  npm run deploy --- -m -t
+# git clone https://github.com/osrf/gzweb
+# git checkout gzweb_1.4.1
+# source /usr/share/gazebo/setup.sh
+# npm run deploy --- -m -t
+# npm start
 
 # gzweb color issue
 # https://support.yonohub.com/t/gzweb-media-directory-is-missing/144
