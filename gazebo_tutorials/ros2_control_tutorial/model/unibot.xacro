@@ -2,26 +2,19 @@
 <robot name="unibot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Includes -->
-  <xacro:include filename="$(find xacro_tutorial)/model/xacro/links.xacro"/>
-  <xacro:include filename="$(find xacro_tutorial)/model/xacro/union.xacro"/>
+  <xacro:include filename="$(find ros2_control_tutorial)/model/xacro/links.xacro"/>
+  <xacro:include filename="$(find ros2_control_tutorial)/model/xacro/union.xacro"/>
 
   
   <!-- Links -->
   <xacro:unit link="a1"/>
   <xacro:unit link="a2"/>
-  <xacro:unit link="a3"/>
-  <xacro:unit link="a4"/>
-  <xacro:unit link="a5"/>
-  <xacro:unit link="a6"/>
-  <xacro:unit link="a7"/>
   <xacro:pin root_link="a1"/>
 
   <!-- Joints -->
   <xacro:union parent="a1" child="a2" y=" 1"/>
-  <xacro:union parent="a2" child="a3" x="-1"/>
-  <xacro:union parent="a3" child="a4" y="-1"/>
-  <xacro:union parent="a4" child="a5" x="-1"/>
-  <xacro:union parent="a5" child="a6" y="-1"/>
-  <xacro:union parent="a6" child="a7" x=" 1"/>
+
+  <!-- Plugin -->  
+  <xacro:include filename="$(find ros2_control_tutorial)/model/xacro/plugins.xacro"/>
 
 </robot>

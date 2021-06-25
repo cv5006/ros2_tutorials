@@ -1,9 +1,9 @@
 controller_manager:
   ros__parameters:
-    update_rate: 2  # Hz
+    update_rate: 1  # Hz
 
     joint_state_controller:
-      type: joint_state_controller/JointStateController
+      type: joint_state_broadcaster/JointStateBroadcaster
 
     effort_controllers:
       type: effort_controllers/JointGroupEffortController
@@ -12,3 +12,9 @@ effort_controllers:
   ros__parameters:
     joints:
       - a1_joint
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+      - effort

@@ -13,7 +13,7 @@ from launch_ros.actions import Node
 import xacro
 
 def generate_launch_description():
-    pkg_name = 'xacro_tutorial'
+    pkg_name = 'ros2_control_tutorial'
     robot_name = 'unibot'
 
     urdf_file = os.path.join(
@@ -25,7 +25,7 @@ def generate_launch_description():
     controller_config_file = os.path.join(
         get_package_share_directory(pkg_name),
         'config',
-        'controllers.yaml'        
+        'controllers.yaml'
         )
 
     doc = xacro.parse(open(urdf_file))
@@ -35,7 +35,7 @@ def generate_launch_description():
     # gazebo
     gazebo = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('gazebo_ros'), 'launch'), '/gzserver.launch.py']),
+                    get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
              )
 
     # spawn robot
@@ -47,7 +47,7 @@ def generate_launch_description():
 
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
-        executable='robot_state_publisher',        
+        executable='robot_state_publisher',
         parameters=[
             robot_description
         ],
@@ -56,42 +56,31 @@ def generate_launch_description():
 
 
     # ros_control
-    controller_manager = Node(
-        package="controller_manager",
-        executable="ros2_control_node",
-        parameters=[
-            robot_description,
-            controller_config_file
-        ],
-        output='screen'
-    )
-
     load_joint_state_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_start_controller', 'joint_state_controller'],
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'joint_state_broadcaster'],
         output='screen'
     )
 
     load_effort_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_start_controller', 'effort_controllers'],
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start', 'effort_controllers'],
         output='screen'
     )
 
     return LaunchDescription([
-        # RegisterEventHandler(
-        #     event_handler=OnProcessExit(
-        #         target_action=spawn_entity,
-        #         on_exit=[load_joint_state_controller],
-        #     )
-        # ),
-        # RegisterEventHandler(
-        #     event_handler=OnProcessExit(
-        #         target_action=load_joint_state_controller,
-        #         on_exit=[load_effort_controller],
-        #     )
-        # ),
-
-        # controller_manager,
         gazebo,
-        # node_robot_state_publisher,
-        # spawn_entity,
+        node_robot_state_publisher,
+        spawn_entity,
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=spawn_entity,
+                on_exit=[load_joint_state_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_effort_controller],
+            )
+        ),        
     ])

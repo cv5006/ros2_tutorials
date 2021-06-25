@@ -16,6 +16,7 @@ sudo apt install libjansson-dev libboost-dev imagemagick libtinyxml-dev mercuria
 # git checkout gzweb_1.4.1
 # source /usr/share/gazebo/setup.sh
 # npm run deploy --- -m -t
+
 # npm start
 
 # gzweb color issue
