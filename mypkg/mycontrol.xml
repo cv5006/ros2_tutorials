@@ -1,0 +1,16 @@
+<library path="mycontrol">
+  <class name="mycontrol/MyHardware"
+         type="mycontrol::MyHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      My first ros2_control hardware.
+    </description>
+  </class>
+  <class name="mycontrol/MyController"
+         type="mycontrol::MyController"
+         base_class_type="controller_interface::ControllerInterface">
+    <description>
+      My first ros2_control controller.
+    </description>
+  </class>
+</library>
