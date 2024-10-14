@@ -3,167 +3,99 @@
 
   <xacro:macro name="myrobot_description" params="parent">
 
+  <!-- helper macro -->
+    <xacro:macro name="create_link" params="
+        link_name
+        xyz_offset
+        rpy_offset
+        box_size
+        ">
+    <link name="${link_name}">
+      <visual>
+        <origin xyz="${xyz_offset}" rpy="${rpy_offset}"/>
+        <geometry>
+          <box size="${box_size}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="${xyz_offset}" rpy="${rpy_offset}"/>
+        <geometry>
+          <box size="${box_size}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="1"/>
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      </inertial>
+    </link>
+  </xacro:macro>
 
-  <link name="base_link">
-    <visual>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-      <material name = "">
-        <color rgba="0.8 0.8 0.8 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </collision>
-  </link>
+  <!-- link definitions -->
+  <xacro:create_link link_name="base_link" xyz_offset="0 0 0" rpy_offset="0 0 0" box_size="0.2 0.2 0.2"/>
+  <xacro:create_link link_name="link1"     xyz_offset="0 0 0.075" rpy_offset="0 0 0" box_size="0.15 0.15 0.05"/>
+  <xacro:create_link link_name="link2"     xyz_offset="0.15 0 0" rpy_offset="0 0 0" box_size="0.3 0.1 0.1"/>
+  <xacro:create_link link_name="link3"     xyz_offset="0.25 0 0" rpy_offset="0 0 0" box_size="0.5 0.1 0.1"/>
+  <xacro:create_link link_name="link4"     xyz_offset="0.2 0 0" rpy_offset="0 0 0" box_size="0.4 0.1 0.1"/>
+  <xacro:create_link link_name="link5"     xyz_offset="0.1 0 0" rpy_offset="0 0 0" box_size="0.2 0.1 0.1"/>
+  <xacro:create_link link_name="link6"     xyz_offset="0.075 0 0" rpy_offset="0 0 0" box_size="0.15 0.1 0.1"/>
 
-  <link name="link1">
-    <visual>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-      <material name = "">
-        <color rgba="0.8 0.8 0.8 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-    </collision>
-  </link>
+  <link name="tool"/>
 
-  <link name="link2">
-    <visual>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-      <material name = "">
-        <color rgba="0.8 0.8 0.8 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-    </collision>
-  </link>
-
-  <link name="link3">
-    <visual>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-      <material name = "">
-        <color rgba="0.8 0.8 0.8 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-    </collision>
-  </link>
-
-  <link name="link4">
-    <visual>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-      <material name = "">
-        <color rgba="0.8 0.8 0.8 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-    </collision>
-  </link>
-
-  <link name="link5">
-    <visual>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-      <material name = "">
-        <color rgba="0.8 0.8 0.8 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.2 0.1 0.1"/>
-      </geometry>
-    </collision>
-  </link>
-
-  <link name="link6">
-    <visual>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-      <material name = "">
-        <color rgba="0.8 0.8 0.8 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </collision>
-  </link>
-
+  <!-- joints - main serial chain -->
   <joint name="joint1" type="revolute">
-    <origin xyz="0.0 0.0 0.1"/>
-    <axis xyz="0 0 1"/>
-    <parent link="${parent}"/>
+    <parent link="base_link"/>
     <child link="link1"/>
-    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="1.0"/>
+    <origin xyz="0 0 0.061584" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="joint2" type="revolute">
-    <origin xyz="0.2 0.0 0.0"/>
-    <axis xyz="0 0 1"/>
     <parent link="link1"/>
     <child link="link2"/>
-    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="1.0"/>
+    <origin xyz="-0.101717 0 0.182284" rpy="${-pi/2} -${pi/3} ${pi/2}"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="joint3" type="revolute">
-    <origin xyz="0.2 0.0 0.0"/>
-    <axis xyz="0 0 1"/>
     <parent link="link2"/>
     <child link="link3"/>
-    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="1.0"/>
+    <origin xyz="0.685682 0 0.041861" rpy="0 ${pi} ${pi+pi/2}"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="joint4" type="revolute">
-    <origin xyz="0.2 0.0 0.0"/>
-    <axis xyz="0 0 1"/>
     <parent link="link3"/>
     <child link="link4"/>
-    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="1.0"/>
+    <origin xyz="0.518777 0 0.067458" rpy="0 ${pi} ${pi+pi/6}"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="joint5" type="revolute">
-    <origin xyz="0.2 0.0 0.0"/>
-    <axis xyz="0 0 1"/>
     <parent link="link4"/>
     <child link="link5"/>
-    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="1.0"/>
+    <origin xyz="0.112654 0 0.110903" rpy="${pi/2} ${pi} ${pi/2}"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${-pi}" upper="${pi}" velocity="2.5"/>
   </joint>
 
   <joint name="joint6" type="revolute">
-    <origin xyz="0.2 0.0 0.0"/>
-    <axis xyz="0 0 1"/>
     <parent link="link5"/>
     <child link="link6"/>
-    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="1.0"/>
+    <origin xyz="-0.085976 0 0.133436" rpy="0 ${-pi/2} 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="${-pi}" upper="${pi}" velocity="2.5"/>
+  </joint>
+  
+  <joint name="joint-tool" type="fixed">
+    <parent link="link6"/>
+    <child link="tool"/>
+    <origin xyz="0 0 .185" rpy="0 0 0"/>
   </joint>
 
-  </xacro:macro>
+</xacro:macro>
 
 </robot>
